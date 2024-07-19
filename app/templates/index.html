@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name=”referrer” content=”no-referrer“>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>基于知识图谱与情感分析的AI心理咨询师</title>
+    <style type="text/css">
+        body{background-image:url(https://s2.loli.net/2023/04/15/FNTWYa9p56dtOqx.jpg);
+                background-size:cover}
+    </style>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">{{title}}</a></li>
+                  <style>.active{font-size:30px;background-color:blue }</style>
+
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <style type="text/css">.navbar{background:purple;}.active{background:purple;}</style>
+
+  <div class="container theme-showcase" role="main" style="margin-top: 80px;">
+      <div id="contents" style="height: 600px; overflow: auto; background-color:transparent;"></div>
+      <div>
+          <textarea class="form-control" id="msg"></textarea>
+          <button class="btn btn-lg btn-info" onclick="sendMsg()" style="float: right;font-size:26px">发送</button>
+      </div>
+  </div>
+
+
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript">
+
+          var ws = new WebSocket("ws://127.0.0.1:8000/chat");
+          ws.onmessage = function(e) {
+              $("#contents").append('<div class="alert alert-info" role="alert" style="float: left;font-size:20px;">'  + e.data + "</div><br><br><br><br>");
+          }
+          function sendMsg() {
+              var msg = $("#msg").val();
+              $("#contents").append('<div class="alert alert-info" role="alert" style="float:right;font-size:20px;color=black;background-color:#90EE90;">' + msg + "</div><br><br><br><br>");
+              ws.send(msg);
+              $("#msg").val("");
+          }
+
+  </script>
+</body>
+</html>
+
