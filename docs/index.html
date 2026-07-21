@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI 心理咨询师项目展示页">
+  <title>AI 心理咨询师</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f2ff;
+      --card: rgba(255, 255, 255, 0.92);
+      --primary: #6f3cc3;
+      --primary-dark: #4f2597;
+      --text: #252033;
+      --muted: #665d73;
+      --border: #ded3ef;
+      --user: #d9f7df;
+      --bot: #eee7fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(135deg, rgba(111, 60, 195, 0.22), rgba(255, 255, 255, 0.4)),
+        url("https://s2.loli.net/2023/04/15/FNTWYa9p56dtOqx.jpg") center / cover fixed;
+    }
+
+    header {
+      padding: 56px 20px 28px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(32px, 6vw, 56px);
+      letter-spacing: 0.04em;
+    }
+
+    header p {
+      max-width: 760px;
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    main {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+      gap: 24px;
+    }
+
+    section,
+    aside {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(48, 28, 84, 0.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .intro {
+      padding: 32px;
+    }
+
+    .intro h2,
+    .chat h2 {
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+      font-size: 24px;
+    }
+
+    .intro p,
+    .intro li,
+    .status {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .intro ul {
+      padding-left: 20px;
+    }
+
+    .notice {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff8dc;
+      border: 1px solid #ead889;
+      color: #6d5615;
+      line-height: 1.7;
+    }
+
+    .chat {
+      padding: 24px;
+      display: flex;
+      min-height: 620px;
+      flex-direction: column;
+    }
+
+    .messages {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border);
+    }
+
+    .message {
+      width: fit-content;
+      max-width: 86%;
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .message.bot {
+      background: var(--bot);
+    }
+
+    .message.user {
+      margin-left: auto;
+      background: var(--user);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font: inherit;
+      resize: vertical;
+      background: #fff;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 0 20px;
+      color: white;
+      background: var(--primary);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    .backend {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .status {
+      min-height: 24px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI 心理咨询师</h1>
+    <p>基于知识图谱、意图识别和自然语言生成的心理咨询聊天机器人项目展示页。</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>项目简介</h2>
+      <p>
+        本项目后端使用 Python Sanic 提供聊天服务，结合意图分类、医疗/心理咨询知识图谱、
+        NER 服务和生成式回复模型来完成对话流程。
+      </p>
+      <ul>
+        <li>前端：浏览器聊天窗口，通过 WebSocket 发送用户消息。</li>
+        <li>后端：Sanic 服务监听 <code>/chat</code>，根据用户意图调用不同回复模块。</li>
+        <li>模型依赖：BERT/UNILM、Neo4j、本地 NER 与意图识别服务。</li>
+      </ul>
+      <div class="notice">
+        GitHub Pages 只能托管静态网页，不能运行 Python 后端或本地模型。
+        当前页面已部署为项目展示和可连接的聊天前端；要让聊天真正调用模型，需要额外部署公网
+        WebSocket 后端，并在右侧填入 <code>wss://...</code> 地址。
+      </div>
+    </section>
+
+    <aside class="chat">
+      <h2>在线体验</h2>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <div class="controls">
+        <textarea id="messageInput" rows="3" placeholder="输入你想说的话..."></textarea>
+        <button id="sendButton" type="button">发送</button>
+      </div>
+      <div class="backend">
+        <input id="backendInput" type="url" placeholder="可选：wss://your-backend.example.com/chat">
+        <button id="connectButton" type="button">连接后端</button>
+        <div id="status" class="status"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const messages = document.querySelector("#messages");
+    const messageInput = document.querySelector("#messageInput");
+    const backendInput = document.querySelector("#backendInput");
+    const statusText = document.querySelector("#status");
+    const sendButton = document.querySelector("#sendButton");
+    const connectButton = document.querySelector("#connectButton");
+    let socket = null;
+
+    function addMessage(text, type = "bot") {
+      const item = document.createElement("div");
+      item.className = `message ${type}`;
+      item.textContent = text;
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function setStatus(text) {
+      statusText.textContent = text;
+    }
+
+    function connect(url) {
+      if (!url) {
+        setStatus("未配置后端：当前使用静态演示回复。");
+        return;
+      }
+
+      if (socket) {
+        socket.close();
+      }
+
+      socket = new WebSocket(url);
+      setStatus("正在连接后端...");
+
+      socket.addEventListener("open", () => {
+        localStorage.setItem("aiPsychologistBackendUrl", url);
+        setStatus(`已连接：${url}`);
+      });
+
+      socket.addEventListener("message", (event) => {
+        addMessage(event.data, "bot");
+      });
+
+      socket.addEventListener("close", () => {
+        setStatus("后端连接已关闭。");
+      });
+
+      socket.addEventListener("error", () => {
+        setStatus("后端连接失败，请确认地址可公网访问且使用 wss://。");
+      });
+    }
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) {
+        return;
+      }
+
+      addMessage(text, "user");
+      messageInput.value = "";
+
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(text);
+        return;
+      }
+
+      addMessage("这是静态页面演示。要获得真实 AI 回复，请先部署 Python 后端并连接公网 WebSocket 地址。");
+    }
+
+    sendButton.addEventListener("click", sendMessage);
+    connectButton.addEventListener("click", () => connect(backendInput.value.trim()));
+    messageInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    const savedUrl = localStorage.getItem("aiPsychologistBackendUrl");
+    const queryUrl = new URLSearchParams(window.location.search).get("ws");
+    backendInput.value = queryUrl || savedUrl || "";
+
+    addMessage("你好，我是 AI 心理咨询师项目展示页。你可以先体验页面，也可以连接已部署的后端服务。");
+    connect(backendInput.value.trim());
+  </script>
+</body>
+</html>
